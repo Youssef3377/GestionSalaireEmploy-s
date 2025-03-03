@@ -6,6 +6,7 @@ use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\DepartementController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\PayementController;
 use Illuminate\Support\Facades\Route;
 
 /*Route::get('/', function () {
@@ -81,6 +82,8 @@ Route::middleware('auth')->group(function(){
                 });
 
 
-
+                Route::prefix('payement')->group(function(){
+                    Route::get('/',[PayementController::class,'index'])->name('payement');
+                });
 
 });
