@@ -84,6 +84,7 @@ Route::middleware('auth')->group(function(){
 
                 Route::prefix('payement')->group(function(){
                     Route::get('/',[PayementController::class,'index'])->name('payement');
+                    Route::get('/make',[PayementController::class,'initPayement'])->name('payement.init');
                 });
 
 });
