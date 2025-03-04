@@ -13,17 +13,16 @@ return new class extends Migration
     {
         Schema::create('payements', function (Blueprint $table) {
             $table->id();
-            $table->string('reference');
-
-            $table->unsignedBigInteger('employer_id');
-            $table->foreign('employer_id')->references('id')->on('employers');
-            $table->string('amount');
-            $table->dateTime('lunch_date');
-            $table->dateTime('done_time');
-            $table->enum('status',['SUCCES','FAILLED'])->default('SUCCES');
-            $table->enum('month',['JANVIER','FEVRIER','MARS',
-            'AVRIL','MAI','JUIN','JUILLET','AOUT','SEPTEMBRE'
-            ,'OCTOBRE','NOVEMBRE','DECEMBRE']);
+            $table->string('reference')->unique();
+            $table->foreignId('employer_id')->constrained('employers')->onDelete('cascade'); // Clé étrangère correcte
+            $table->decimal('amount', 10, 2); // Stocker les montants en décimal
+            $table->dateTime('lunch_date'); // Correction du nom
+            $table->dateTime('done_time')->nullable(); // Nullable si pas encore payé
+            $table->enum('status', ['SUCCES', 'FAILLED'])->default('SUCCES');
+            $table->enum('month', [
+                'JANVIER', 'FEVRIER', 'MARS', 'AVRIL', 'MAI', 'JUIN',
+                'JUILLET', 'AOUT', 'SEPTEMBRE', 'OCTOBRE', 'NOVEMBRE', 'DECEMBRE'
+            ]);
             $table->string('year');
 
             $table->timestamps();

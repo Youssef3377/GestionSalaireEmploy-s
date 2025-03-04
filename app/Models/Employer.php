@@ -22,4 +22,10 @@ class Employer extends Model
    {
        return $this->belongsTo(Departement::class);
    }
+
+    // Définir la relation One-to-Many (Un employeur peut avoir plusieurs paiements)
+    public function payements()
+    {
+        return $this->hasMany(Payement::class);
+    }
 }

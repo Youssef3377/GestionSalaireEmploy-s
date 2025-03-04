@@ -67,20 +67,26 @@
                                    @forelse ($payements as $payement)
                                  <tr>
                                     <td class="cell">{{$payement->reference}}</td>
-                                    <td class="cell"><span class="truncate">{{$payement->id}}</span></td>
+                                    <td class="cell"><span class="truncate">{{$payement->employer->nom}} {{$payement->employer->prenom}}</span></td>
+                                    <td class="cell"><span class="truncate">{{$payement->amount}}</span></td>
+                                    <td class="cell"><span class="truncate">{{date('d-m-y',strtotime($payement->lunch_date))}}</span></td>
+                                    <td class="cell"><span class="truncate">{{$payement->month}}</span></td>
+                                    <td class="cell"><span class="truncate">{{$payement->year}}</span></td>
+                                    <td class="cell"><span class="truncate"><button
+                                        class="btn btn-success btn-sm">
+                                        {{ $payement ->status}}
+                                    </button></span></td>
                                     <td class="cell">
 
-                                       <!-- Bouton Éditer -->
-                                        <a href="{{ route('departement.edit', $departement->id) }}" class="btn-sm app-btn-secondary"> <i class="fas fa-edit text-warning"></i>Éditer</a>
-
-                                      <!-- Bouton Supprimer -->
-                                             <form action="{{ route('departement.destroy', $departement->id) }}" method="POST" style="display:inline;">
+                                      <!-- Bouton Supprimer-->
+                                             <form action="" method="POST" style="display:inline;">
                                                    @csrf
                                                  @method('DELETE')
                                                  <button type="submit" class="btn-delete" onclick="return confirm('Voulez-vous vraiment supprimer cet administrateur ?');">
                                                     <i class="fas fa-trash-alt"></i> Supprimer
                                                 </button>
                                              </form>
+
                                     </td>
                                 </tr>
                                    @empty
@@ -89,11 +95,19 @@
 
                                    @endforelse
 
-                                   @if(session('success'))
-                                   <div class="alert alert-success">
-                                       {{ session('success') }}
-                                   </div>
-                               @endif
+                                  <!-- Affichage des messages de succès -->
+                                  @if(session('success'))
+                                     <div class="alert alert-success">
+                                            {{ session('success') }}
+                                    </div>
+                                  @endif
+
+                                <!-- Affichage des messages d'erreur -->
+                                @if(session('error'))
+                                  <div class="alert alert-danger">
+                                             {{ session('error') }}
+                                 </div>
+                                    @endif
                                    @if(!$isPayementday)
                                    <div class="alert alert-danger ">Vous ne pouvez effectuer de paiement
                                     qu'a la date du paiement
